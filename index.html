@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RoyalBite Fast Food - Premium Luxury Dining</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+* {margin:0; padding:0; box-sizing:border-box;}
+
+body {font-family:'Montserrat', sans-serif; background:#000; color:#fff; overflow-x:hidden;}
+
+.glass {background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.2); border-radius:10px;}
+
+header {position:fixed; top:0; width:100%; z-index:1000; padding:20px; display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.8); backdrop-filter: blur(10px);}
+
+.logo {font-family:'Playfair Display', serif; font-size:2rem; font-weight:700;}
+
+nav button {background:transparent; border:1px solid #fff; color:#fff; padding:10px 20px; margin-left:10px; border-radius:5px; cursor:pointer; transition: all 0.3s;}
+
+nav button:hover {background:#fff; color:#000;}
+
+.hero {height:100vh; background:url('https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover no-repeat; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; position:relative;}
+
+.hero::before {content:''; position:absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.5);}
+
+.hero h1 {font-family:'Playfair Display', serif; font-size:4rem; z-index:1; margin-bottom:20px;}
+
+.hero button {background:#ff6b35; border:none; color:#fff; padding:15px 30px; font-size:1.2rem; border-radius:5px; cursor:pointer; transition: all 0.3s; z-index:1;}
+
+.hero button:hover {background:#e55a2b; transform:scale(1.05);}
+
+section {padding:80px 20px; max-width:1200px; margin:0 auto;}
+
+.products {display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:20px;}
+
+.product-card {background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.2); border-radius:10px; padding:20px; text-align:center; transition: transform 0.3s, box-shadow 0.3s;}
+
+.product-card:hover {transform: translateY(-10px); box-shadow:0 10px 20px rgba(255,255,255,0.1);}
+
+.product-card img {width:100%; height:200px; object-fit:cover; border-radius:10px;}
+
+.product-card h3 {margin:10px 0; font-size:1.5rem;}
+
+.product-card p {margin:5px 0;}
+
+.product-card button {background:#ff6b35; border:none; color:#fff; padding:10px 20px; border-radius:5px; cursor:pointer; margin-top:10px;}
+
+.cart, .checkout {display:none;}
+
+.cart.show, .checkout.show {display:block;}
+
+.modal {position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); display:flex; justify-content:center; align-items:center; z-index:1000;}
+
+.modal-content {background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding:40px; border-radius:10px; width:90%; max-width:500px;}
+
+.modal-content form input {width:100%; padding:10px; margin:10px 0; border:1px solid #fff; border-radius:5px; background:transparent; color:#fff;}
+
+.modal-content button {width:100%; padding:10px; background:#ff6b35; border:none; color:#fff; border-radius:5px; cursor:pointer;}
+
+.reviews {display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:20px;}
+
+.review-card {background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding:20px; border-radius:10px;}
+
+footer {background: rgba(0,0,0,0.9); padding:40px 20px; text-align:center;}
+
+footer .social-icons a {margin:0 10px; color:#fff; font-size:2rem;}
+
+@media (max-width:768px) {.hero h1 {font-size:2.5rem;} .products {grid-template-columns:1fr;}}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">RoyalBite</div>
+
+    <nav>
+
+        <button onclick="showModal('login')">Login</button>
+
+        <button onclick="showModal('signup')">Sign Up</button>
+
+    </nav>
+
+</header>
+
+<section class="hero">
+
+    <h1>Welcome to RoyalBite</h1>
+
+    <button onclick="scrollToSection('products')">Shop Now</button>
+
+</section>
+
+<section id="products" class="products">
+
+    <h2 style="text-align:center; margin-bottom:40px; font-family:'Playfair Display', serif;">Our Menu</h2>
+
+    <!-- Products -->
+
+    <div class="product-card">
+
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Burger">
+
+        <h3>Deluxe Burger</h3>
+
+        <p>Rating: ★★★★☆</p>
+
+        <p>$12.99</p>
+
+        <button onclick="addToCart('Deluxe Burger',12.99)">Add to Cart</button>
+
+    </div>
+
+    <div class="product-card">
+
+        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Pizza">
+
+        <h3>Margherita Pizza</h3>
+
+        <p>Rating: ★★★★★</p>
+
+        <p>$15.99</p>
+
+        <button onclick="addToCart('Margherita Pizza',15.99)">Add to Cart</button>
+
+    </div>
+
+    <div class="product-card">
+
+        <img src="https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Fried Chicken">
+
+        <h3>Crispy Fried Chicken</h3>
+
+        <p>Rating: ★★★★☆</p>
+
+        <p>$10.99</p>
+
+        <button onclick="addToCart('Crispy Fried Chicken',10.99)">Add to Cart</button>
+
+    </div>
+
+    <div class="product-card">
+
+        <img src="https://images.unsplash.com/photo-1601050690217-8c5a3e5f4a28?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Cheese Sandwich">
+
+        <h3>Cheese Sandwich</h3>
+
+        <p>Rating: ★★★★☆</p>
+
+        <p>$6.99</p>
+
+        <button onclick="addToCart('Cheese Sandwich',6.99)">Add to Cart</button>
+
+    </div>
+
+    <div class="product-card">
+
+        <img src="https://images.unsplash.com/photo-1606755962772-6aaf4eb61c21?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="French Fries">
+
+        <h3>Golden French Fries</h3>
+
+        <p>Rating: ★★★★★</p>
+
+        <p>$4.99</p>
+
+        <button onclick="addToCart('Golden French Fries',4.99)">Add to Cart</button>
+
+    </div>
+
+    <div class="product-card">
+
+        <img src="https://images.unsplash.com/photo-1604908177525-1a3c0e93ec39?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Chocolate Cake">
+
+        <h3>Chocolate Cake Slice</h3>
+
+        <p>Rating: ★★★★★</p>
+
+        <p>$5.99</p>
+
+        <button onclick="addToCart('Chocolate Cake Slice',5.99)">Add to Cart</button>
+
+    </div>
+
+    <div class="product-card">
+
+        <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Soft Drink">
+
+        <h3>Refreshing Soft Drink</h3>
+
+        <p>Rating: ★★★★☆</p>
+
+        <p>$2.99</p>
+
+        <button onclick="addToCart('Refreshing Soft Drink',2.99)">Add to Cart</button>
+
+    </div>
+
+    <div class="product-card">
+
+        <img src="https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Veggie Salad">
+
+        <h3>Fresh Veggie Salad</h3>
+
+        <p>Rating: ★★★★☆</p>
+
+        <p>$7.99</p>
+
+        <button onclick="addToCart('Fresh Veggie Salad',7.99)">Add to Cart</button>
+
+    </div>
+
+    <div class="product-card">
+
+        <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Grilled Sandwich">
+
+        <h3>Grilled Chicken Sandwich</h3>
+
+        <p>Rating: ★★★★☆</p>
+
+        <p>$8.99</p>
+
+        <button onclick="addToCart('Grilled Chicken Sandwich',8.99)">Add to Cart</button>
+
+    </div>
+
+    <div class="product-card">
+
+        <img src="https://images.unsplash.com/photo-1598515213691-27f6dbe58fd2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Ice Cream">
+
+        <h3>Vanilla Ice Cream</h3>
+
+        <p>Rating: ★★★★★</p>
+
+        <p>$3.99</p>
+
+        <button onclick="addToCart('Vanilla Ice Cream',3.99)">Add to Cart</button>
+
+    </div>
+
+    <div class="product-card">
+
+        <img src="https://images.unsplash.com/photo-1600628422181-2f1c7751f94b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Hotdog">
+
+        <h3>Classic Hotdog</h3>
+
+        <p>Rating: ★★★★☆</p>
+
+        <p>$5.49</p>
+
+        <button onclick="addToCart('Classic Hotdog',5.49)">Add to Cart</button>
+
+    </div>
+
+    <div class="product-card">
+
+        <img src="https://images.unsplash.com/photo-1598515213677-7c81e9822f48?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Chicken Wings">
+
+        <h3>Spicy Chicken Wings</h3>
+
+        <p>Rating: ★★★★★</p>
+
+        <p>$9.99</p>
+
+        <button onclick="addToCart('Spicy Chicken Wings',9.99)">Add to Cart</button>
+
+    </div>
+
+</section>
+
+<section id="cart" class="cart">
+
+    <h2>Your Cart</h2>
+
+    <div id="cart-items"></div>
+
+    <p id="cart-total" style="margin-top:20px; font-weight:bold;"></p>
+
+    <button onclick="showCheckout()">Proceed to Checkout</button>
+
+</section>
+
+<section id="checkout" class="checkout">
+
+    <h2>Checkout</h2>
+
+    <div class="glass" style="padding:20px;">
+
+        <h3>Payment Options</h3>
+
+        <button>Pay with PayPal</button>
+
+        <button>Pay with Payoneer</button>
+
+        <button>Pay with Skrill</button>
+
+    </div>
+
+</section>
+
+<section id="about">
+
+    <h2>About Us</h2>
+
+    <p>RoyalBite delivers premium fast food with luxury ingredients and modern flair. Experience the best in fried delights.</p>
+
+</section>
+
+<section id="contact">
+
+    <h2>Contact Us</h2>
+
+    <p>Email: info@royalbite.com | Phone: +1 234 567 890</p>
+
+</section>
+
+<section id="reviews" class="reviews">
+
+    <h2>Customer Reviews</h2>
+
+    <div class="review-card">
+
+        <p>"Absolutely luxurious! The burger was divine." - John D.</p>
+
+    </div>
+
+    <div class="review-card">
+
+        <p>"Fast, fresh, and fancy. Love the glassmorphism UI!" - Jane S.</p>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <div class="social-icons">
+
+        <a href="#">Facebook</a>
+
+        <a href="#">Instagram</a>
+
+        <a href="#">Twitter</a>
+
+    </div>
+
+    <p>&copy; 2023 RoyalBite Fast Food. All rights reserved.</p>
+
+</footer>
+
+<div id="auth-modal" class="modal" style="display:none;">
+
+    <div class="modal-content">
+
+        <span onclick="closeModal()" style="float:right; cursor:pointer;">&times;</span>
+
+        <h2 id="modal-title">Login</h2>
+
+        <form id="auth-form">
+
+            <input type="email" placeholder="Email" required>
+
+            <input type="password" placeholder="Password" required>
+
+            <button type="submit">Submit</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+let cart = [];
+
+function showModal(type){
+
+    document.getElementById('modal-title').textContent = type==='login'?'Login':'Sign Up';
+
+    document.getElementById('auth-modal').style.display='flex';
+
+}
+
+function closeModal(){
+
+    document.getElementById('auth-modal').style.display='none';
+
+}
+
+function addToCart(name,price){
+
+    const existingItem = cart.find(item=>item.name===name);
+
+    if(existingItem){ existingItem.qty+=1; } 
+
+    else{ cart.push({name,price,qty:1}); }
+
+    updateCart();
+
+    document.getElementById('cart').classList.add('show');
+
+}
+
+function updateCart(){
+
+    const cartItems = document.getElementById('cart-items');
+
+    cartItems.innerHTML = cart.map((item,index)=>`
+
+        <div style="margin-bottom:10px;">
+
+            <p>
+
+                ${item.name} - $${item.price} x 
+
+                <input type="number" min="1" value="${item.qty}" style="width:50px" onchange="updateQty(${index},this.value)">
+
+                = $${(item.price*item.qty).toFixed(2)}
+
+                <button onclick="removeItem(${index})" style="margin-left:10px;">Remove</button>
+
+            </p>
+
+        </div>
+
+    `).join('');
+
+    const total = cart.reduce((sum,item)=>sum + item.price*item.qty,0);
+
+    document.getElementById('cart-total').textContent = `Total: $${total.toFixed(2)}`;
+
+}
+
+function updateQty(index,value){
+
+    cart[index].qty = parseInt(value)||1;
+
+    updateCart();
+
+}
+
+function removeItem(index){
+
+    cart.splice(index,1);
+
+    updateCart();
+
+}
+
+function showCheckout(){
+
+    document.getElementById('checkout').classList.add('show');
+
+}
+
+function scrollToSection(id){
+
+    document.getElementById(id).scrollIntoView({behavior:'smooth'});
+
+}
+
+document.getElementById('auth-form').addEventListener('submit',function(e){
+
+    e.preventDefault();
+
+    alert('Authentication simulated. In a real app, this would connect to a backend.');
+
+    closeModal();
+
+});
+
+</script>
+
+</body>
+
+</html>
